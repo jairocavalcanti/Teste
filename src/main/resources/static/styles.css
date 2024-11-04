@@ -1,0 +1,46 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+tr {
+    cursor: move; /* Cursor indica que a linha pode ser arrastada */
+}
+
+tr:hover {
+    background-color: #f1f1f1;
+}
+
+tr.high-cost {
+    background-color: yellow; /* Destaque para custo maior ou igual a R$1.000,00 */
+}
+
+button {
+    margin-top: 20px;
+}
+
+.btn-reorder {
+    width: 50px;
+}
