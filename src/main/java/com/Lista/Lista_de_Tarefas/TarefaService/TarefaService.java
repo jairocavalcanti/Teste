@@ -55,20 +55,25 @@ public class TarefaService {
 
     @Transactional
     public void moverTarefa(Long idTarefa, Long idTarefaDestino) {
-        // Recupera as duas tarefas pelos IDs
+        // Carrega as tarefas com uma única consulta
         Tarefa tarefa = tarefaRepository.findById(idTarefa)
             .orElseThrow(() -> new IllegalArgumentException("Tarefa não encontrada"));
         Tarefa tarefaDestino = tarefaRepository.findById(idTarefaDestino)
             .orElseThrow(() -> new IllegalArgumentException("Tarefa de destino não encontrada"));
     
-        // Troca as ordens das tarefas
-        int ordemTemporaria = tarefa.getOrdemApresentacao();
-        tarefa.setOrdemApresentacao(tarefaDestino.getOrdemApresentacao());
-        tarefaDestino.setOrdemApresentacao(ordemTemporaria);
+        int ordemOrigem = tarefa.getOrdemApresentacao();
+        int ordemDestino = tarefaDestino.getOrdemApresentacao();
     
-        // Salva as alterações
+        // Ajusta as ordens sem duplicar chamadas desnecessárias
+        if (ordemOrigem < ordemDestino) {
+            tarefaRepository.updateOrdemParaCima(ordemOrigem + 1, ordemDestino);
+        } else {
+            tarefaRepository.updateOrdemParaBaixo(ordemDestino, ordemOrigem - 1);
+        }
+    
+        // Atualiza a ordem da tarefa movida
+        tarefa.setOrdemApresentacao(ordemDestino);
         tarefaRepository.save(tarefa);
-        tarefaRepository.save(tarefaDestino);
     }
     
     

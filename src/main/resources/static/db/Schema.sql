@@ -3,5 +3,9 @@ CREATE TABLE tarefas (
     nome VARCHAR(255) NOT NULL UNIQUE,
     custo DECIMAL(10, 2) NOT NULL,
     data_limite DATE NOT NULL,
-    ordem_apresentacao INT NOT NULL 
+    ordem_apresentacao INT NOT NULL UNIQUE
 );
+
+ALTER TABLE tarefas DROP INDEX ordem_apresentacao;
+
+SELECT * from tarefas
